@@ -36,7 +36,7 @@ export default function AnimatedSlider() {
 
   return (
     <div className="w-full overflow-hidden relative group">
-      <div className="relative w-full h-[50vh]">
+      <div className="relative w-full h-[70vh]">
         {images.map((src, index) => {
           let imageClasses = `absolute top-0 left-0 w-full h-full object-cover transition-all duration-1500 ease-in-out`;
 
@@ -48,16 +48,18 @@ export default function AnimatedSlider() {
             imageClasses += ` z-10`; // Other slides, collapsed
           }
 
+          const isCurrent = index === current;
+          const isPrev = index === prev;
+          const isNext = (current === images.length - 1 && index === 0) || (current !== images.length - 1 && index === current + 1);
+
           return (
             <div 
               key={index}
               className="absolute inset-0 overflow-hidden"
               style={{
-                clipPath: index === current 
+                clipPath: isCurrent || isPrev || isNext
                   ? 'inset(0 0 0 0)' 
-                  : index === prev 
-                    ? 'inset(0 0 0 0)'
-                    : 'inset(50% 0 50% 0)',
+                  : 'inset(50% 0 50% 0)',
                 transition: 'clip-path 1500ms cubic-bezier(0.4, 0, 0.2, 1)'
               }}
             >
@@ -66,10 +68,10 @@ export default function AnimatedSlider() {
                 alt={`slide-${index}`}
                 className={imageClasses}
                 style={{
-                  transform: index === current 
+                  transform: isCurrent 
                     ? 'scale(1.1)' 
                     : 'scale(1)',
-                  transition: 'transform 1800ms cubic-bezier(0.4, 0, 0.2, 1)'
+                  transition: 'transform 2000ms cubic-bezier(0.4, 0, 0.2, 1)'
                 }}
               />
             </div>

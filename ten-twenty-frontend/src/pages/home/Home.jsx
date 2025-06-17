@@ -3,8 +3,13 @@ import AnimatedSlider from '../../components/AnimatedSlider'
 
 export default function Home() {
   return (
-    <div className="flex items-center justify-center">
-      <AnimatedSlider />
+    <div className="relative w-full min-h-screen">
+      <div className="absolute inset-0">
+        <AnimatedSlider />
+      </div>
+      <div className="absolute inset-x-0 top-0 z-10 px-3 py-2">
+        <Header />
+      </div>
     </div>
   )
 }

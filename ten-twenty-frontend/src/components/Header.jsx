@@ -3,7 +3,7 @@ import arrowRight from '../assets/arrow-right.png'
 
 export default function Header() {
   return (
-    <header className="bg-white shadow-sm rounded-lg m-6 h-[101px]">
+    <header className="bg-white shadow-sm rounded-sm m-6 h-[101px]">
       <div className="max-w-10xl mx-auto flex items-center justify-between py-6 px-8">
         <nav className="flex justify-start">
           <ul className="flex space-x-8 text-base font-normal text-gray-900">
