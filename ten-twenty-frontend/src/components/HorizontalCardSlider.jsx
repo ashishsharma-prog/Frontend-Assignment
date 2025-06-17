@@ -191,25 +191,6 @@ const HorizontalCardSlider = () => {
     </div>
   ), [currentIndex, getCardStyle]);
 
-  const renderNavigationButtons = useMemo(() => (
-    <>
-      <button
-        onClick={goToPrevious}
-        disabled={currentIndex === 0 || isAnimating}
-        className={`${styles.navButton} ${styles.navButtonLeft}`}
-      >
-        <ChevronLeft className="w-6 h-6 text-white" />
-      </button>
-      <button
-        onClick={goToNext}
-        disabled={currentIndex === profiles.length - 1 || isAnimating}
-        className={`${styles.navButton} ${styles.navButtonRight}`}
-      >
-        <ChevronRight className="w-6 h-6 text-white" />
-      </button>
-    </>
-  ), [currentIndex, isAnimating, goToNext, goToPrevious]);
-
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -228,11 +209,7 @@ const HorizontalCardSlider = () => {
         >
           {profiles.map((profile, index) => renderCard(profile, index))}
         </div>
-        {renderNavigationButtons}
-      </div>
-
-      <div className={styles.helpText}>
-        <p>Drag cards or use arrow keys to navigate</p>
+        
       </div>
     </div>
   );
