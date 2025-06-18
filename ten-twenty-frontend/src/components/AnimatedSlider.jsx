@@ -253,7 +253,7 @@ const AnimatedSlider = () => {
     <div className="w-full overflow-hidden relative group">
       <div
         key={current}
-        className="absolute inset-0 z-50 flex flex-col items-start justify-center pointer-events-none select-none pl-2 sm:pl-4 md:pl-8 lg:pl-24 text-left w-full mt-20 sm:mt-32"
+        className="absolute inset-0 z-50 flex flex-col items-start justify-center pointer-events-none select-none pl-2 sm:pl-4 md:pl-8 lg:pl-24 text-left w-full mt-12 sm:mt-20 md:mt-24"
       >
         <span className="text-white text-sm xs:text-base sm:text-lg md:text-xl font-light mb-1 sm:mb-2 md:mb-4 opacity-80 tracking-wide animate-slideUpFade" style={{textShadow: '0 2px 8px rgba(0,0,0,0.4)'}}>Welcome To TenTwenty Farms</span>
         <h1 className="text-white text-lg xs:text-xl sm:text-3xl md:text-6xl font-light leading-tight md:leading-tight animate-slideUpFade-delay" style={{textShadow: '0 4px 16px rgba(0,0,0,0.5)'}}>From Our Farms<br className='hidden sm:block'/>To Your Hands</h1>

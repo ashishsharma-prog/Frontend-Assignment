@@ -1,24 +1,23 @@
-import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 
 // Styles
 const styles = {
   container: 'flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-4 overflow-hidden',
-  header: 'mb-24 mt-16 text-center max-w-3xl mx-auto',
-  headerTitle: 'text-4xl font-bold text-white mb-4',
-  headerText: 'text-gray-300 text-lg leading-relaxed',
-  sliderContainer: 'relative w-full max-w-6xl h-[800px] mb-24 flex items-center justify-center',
-  slider: 'relative w-full h-full cursor-grab active:cursor-grabbing',
-  card: 'absolute left-1/2 top-1/2 w-[500px] h-[800px] bg-white rounded-sm shadow-2xl overflow-hidden select-none',
+  header: 'mb-12 md:mb-24 mt-8 md:mt-16 text-center max-w-3xl mx-auto px-4',
+  headerTitle: 'text-2xl md:text-4xl font-bold text-white mb-4',
+  headerText: 'text-gray-300 text-base md:text-lg leading-relaxed',
+  sliderContainer: 'relative w-full max-w-6xl h-[350px] md:h-[800px] mb-12 md:mb-24 flex items-center justify-center',
+  slider: 'relative w-full h-full cursor-grab active:cursor-grabbing touch-none',
+  card: 'absolute left-1/2 top-1/2 w-[160px] md:w-[500px] h-[260px] md:h-[800px] bg-white rounded-sm shadow-2xl overflow-hidden select-none',
   cardImage: 'w-full h-4/5 object-cover pointer-events-none',
-  dragIndicator: 'absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-600 font-medium',
-  profileInfo: 'absolute bottom-0 left-0 right-0 p-8',
-  profileName: 'text-3xl font-bold mb-3 text-gray-800 text-center',
-  profileLocation: 'text-xl text-gray-600 text-center',
-  navButton: 'absolute top-1/2 transform -translate-y-1/2 w-12 h-12 bg-white/20 hover:bg-white/30 disabled:opacity-50 disabled:cursor-not-allowed rounded-full shadow-lg flex items-center justify-center transition-colors duration-200 backdrop-blur-sm z-20',
-  navButtonLeft: 'left-4',
-  navButtonRight: 'right-4',
-  helpText: 'text-center text-gray-300 text-sm',
+  dragIndicator: 'absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-8 h-8 md:w-16 md:h-16 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-600 font-medium text-xs md:text-base',
+  profileInfo: 'absolute bottom-0 left-0 right-0 p-2 md:p-8',
+  profileName: 'text-base md:text-3xl font-bold mb-1 md:mb-3 text-gray-800 text-center',
+  profileLocation: 'text-xs md:text-xl text-gray-600 text-center',
+  navButton: 'absolute top-1/2 transform -translate-y-1/2 w-8 h-8 md:w-12 md:h-12 bg-white/20 hover:bg-white/30 disabled:opacity-50 disabled:cursor-not-allowed rounded-full shadow-lg flex items-center justify-center transition-colors duration-200 backdrop-blur-sm z-20',
+  navButtonLeft: 'left-2 md:left-4',
+  navButtonRight: 'right-2 md:right-4',
+  helpText: 'text-center text-gray-300 text-xs md:text-sm',
 };
 
 // Mock data
@@ -117,7 +116,10 @@ const HorizontalCardSlider = () => {
 
   const getCardStyle = useCallback((index) => {
     const relativeIndex = index - currentIndex;
-    const baseTranslateX = relativeIndex * 800 + dragOffset;
+    const isMobile = window.innerWidth < 768;
+    const cardWidth = isMobile ? 160 : 500;
+    const cardSpacing = isMobile ? 180 : 800; // Reduced spacing for mobile
+    const baseTranslateX = relativeIndex * cardSpacing + dragOffset;
     const scale = relativeIndex === 0 ? 1 : 0.85;
     const opacity = Math.abs(relativeIndex) <= 1 ? 1 : 0;
     const zIndex = 10 - Math.abs(relativeIndex);
@@ -126,11 +128,11 @@ const HorizontalCardSlider = () => {
     let translateY = 0;
     if (relativeIndex < 0) {
       rotation = -20;
-      translateY = 130;
+      translateY = isMobile ? 30 : 130;
     }
     if (relativeIndex >= 1) {
       rotation = 20;
-      translateY = 130;
+      translateY = isMobile ? 30 : 130;
     }
 
     return {
@@ -139,8 +141,8 @@ const HorizontalCardSlider = () => {
       zIndex,
       transition: isDragging ? 'none' : 'transform 0.3s ease-out, opacity 0.3s ease-out',
       visibility: Math.abs(relativeIndex) <= 1 ? 'visible' : 'hidden',
-      marginLeft: '-250px',
-      marginTop: '-400px',
+      marginLeft: isMobile ? '-80px' : '-250px',
+      marginTop: isMobile ? '-130px' : '-400px',
     };
   }, [currentIndex, dragOffset, isDragging]);
 
