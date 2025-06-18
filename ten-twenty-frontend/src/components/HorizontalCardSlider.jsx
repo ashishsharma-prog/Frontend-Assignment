@@ -1,19 +1,20 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
+import '../styles/cardTextAnimation.css';
 
 // Styles
 const styles = {
-  container: 'flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-4 overflow-hidden',
+  container: 'flex flex-col items-center justify-center min-h-screen bg-white p-4 overflow-hidden',
   header: 'mb-12 md:mb-24 mt-8 md:mt-16 text-center max-w-3xl mx-auto px-4',
-  headerTitle: 'text-2xl md:text-4xl font-bold text-white mb-4',
-  headerText: 'text-gray-300 text-base md:text-lg leading-relaxed',
+  headerTitle: 'text-2xl md:text-4xl font-bold text-gray-900 mb-4',
+  headerText: 'text-gray-600 text-base md:text-lg leading-relaxed',
   sliderContainer: 'relative w-full max-w-6xl h-[350px] md:h-[800px] mb-12 md:mb-24 flex items-center justify-center',
   slider: 'relative w-full h-full cursor-grab active:cursor-grabbing touch-none',
   card: 'absolute left-1/2 top-1/2 w-[160px] md:w-[500px] h-[260px] md:h-[800px] bg-white rounded-sm shadow-2xl overflow-hidden select-none',
   cardImage: 'w-full h-4/5 object-cover pointer-events-none',
   dragIndicator: 'absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-8 h-8 md:w-16 md:h-16 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-600 font-medium text-xs md:text-base',
-  profileInfo: 'absolute bottom-0 left-0 right-0 p-2 md:p-8',
-  profileName: 'text-base md:text-3xl font-bold mb-1 md:mb-3 text-gray-800 text-center',
-  profileLocation: 'text-xs md:text-xl text-gray-600 text-center',
+  profileInfo: 'absolute bottom-0 left-0 right-0 p-2 md:p-8 bg-gradient-to-t from-black/80 to-transparent',
+  profileName: 'text-base md:text-3xl font-bold mb-1 md:mb-3 text-white text-center',
+  profileLocation: 'text-xs md:text-xl text-gray-200 text-center',
   navButton: 'absolute top-1/2 transform -translate-y-1/2 w-8 h-8 md:w-12 md:h-12 bg-white/20 hover:bg-white/30 disabled:opacity-50 disabled:cursor-not-allowed rounded-full shadow-lg flex items-center justify-center transition-colors duration-200 backdrop-blur-sm z-20',
   navButtonLeft: 'left-2 md:left-4',
   navButtonRight: 'right-2 md:right-4',
@@ -127,11 +128,11 @@ const HorizontalCardSlider = () => {
     let rotation = 0;
     let translateY = 0;
     if (relativeIndex < 0) {
-      rotation = -20;
+      rotation = -15;
       translateY = isMobile ? 30 : 130;
     }
     if (relativeIndex >= 1) {
-      rotation = 20;
+      rotation = 15;
       translateY = isMobile ? 30 : 130;
     }
 
@@ -185,10 +186,12 @@ const HorizontalCardSlider = () => {
         {index === currentIndex && (
           <div className={styles.dragIndicator}>Drag</div>
         )}
-        <div className={styles.profileInfo}>
-          <h3 className={styles.profileName}>{profile.name}</h3>
-          <p className={styles.profileLocation}>{profile.location}</p>
-        </div>
+        {index === currentIndex && (
+          <div className={styles.profileInfo}>
+            <h3 className={`${styles.profileName} animate-slideUpFade`}>{profile.name}</h3>
+            <p className={`${styles.profileLocation} animate-slideUpFade-delay`}>{profile.location}</p>
+          </div>
+        )}
       </div>
     </div>
   ), [currentIndex, getCardStyle]);
@@ -196,8 +199,8 @@ const HorizontalCardSlider = () => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h1 className={styles.headerTitle}>Quality Products</h1>
-        <p className={styles.headerText}>
+        <h1 className={`${styles.headerTitle} animate-slideUpFade`}>Quality Products</h1>
+        <p className={`${styles.headerText} animate-slideUpFade-delay`}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
         </p>
       </div>
@@ -211,7 +214,6 @@ const HorizontalCardSlider = () => {
         >
           {profiles.map((profile, index) => renderCard(profile, index))}
         </div>
-        
       </div>
     </div>
   );
