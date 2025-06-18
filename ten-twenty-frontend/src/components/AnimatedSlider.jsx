@@ -1,5 +1,9 @@
 import { useEffect, useRef, useState, useMemo, useCallback, memo } from "react";
 import "../styles/sliderTextAnimation.css";
+import Slider1 from '../assets/slider1.png';
+import Slider2 from '../assets/slider2.png';
+import Slider3 from '../assets/slider3.png';
+import Slider4 from '../assets/slider4.png';
 
 const DELAY = 7000;
 const LOADER_INTERVAL = 30;
@@ -10,37 +14,37 @@ const profiles = [
     id: 1,
     name: 'Client 1',
     location: 'Dubai, United Arab Emirates',
-    image: 'https://images.unsplash.com/photo-1444858291040-58f756a3bdd6?q=80&w=2048&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    image: Slider1,
   },
   {
     id: 2,
     name: 'Client 2',
     location: 'New York, United States',
-    image: 'https://images.unsplash.com/photo-1444858291040-58f756a3bdd6?q=80&w=2048&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    image: Slider2,
   },
   {
     id: 3,
     name: 'Client 3',
     location: 'London, United Kingdom',
-    image: 'https://images.unsplash.com/photo-1444858291040-58f756a3bdd6?q=80&w=2048&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    image: Slider3,
   },
   {
     id: 4,
     name: 'Client 4',
     location: 'Tokyo, Japan',
-    image: 'https://images.unsplash.com/9/fields.jpg?q=80&w=1280&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    image: Slider4,
   },
   {
     id: 5,
     name: 'Client 5',
     location: 'Sydney, Australia',
-    image: 'https://images.unsplash.com/photo-1495107334309-fcf20504a5ab?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    image: Slider1,
   },
   {
     id: 6,
     name: 'Client 6',
     location: 'Paris, France',
-    image: 'https://images.unsplash.com/photo-1504017180492-34b17fe42f4c?q=80&w=3003&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    image: Slider2,
   },
 ];
 
@@ -99,6 +103,7 @@ const Slide = memo(({ profile, isCurrent, isPrev, isNext }) => {
           alt={profile.name}
           className={`absolute top-0 left-0 w-full h-full object-cover transition-all duration-1500 ease-in-out ${zIndex}`}
           style={imageStyle}
+          loading="lazy"
         />
       </div>
     </div>
@@ -149,6 +154,7 @@ const NextPreview = memo(({ nextImage, loader, onNext }) => {
             src={nextImage}
             alt="Next"
             className="w-10 h-10 xs:w-12 xs:h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 object-cover rounded-md"
+            loading="lazy"
           />
           <div className="absolute inset-0 flex items-center justify-center bg-black/30 pointer-events-none">
             <span className="text-white text-[10px] xs:text-xs font-normal">Next</span>

@@ -1,5 +1,9 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import '../styles/cardTextAnimation.css';
+import HSlider1 from '../assets/hslider-1.png';
+import HSlider2 from '../assets/hslider-2.png';
+import HSlider3 from '../assets/hslider-3.png';
+import HSlider4 from '../assets/hslider-4.png';
 
 // Styles
 const styles = {
@@ -26,37 +30,37 @@ const profiles = [
     id: 1,
     name: 'Client 1',
     location: 'Dubai, United Arab Emirates',
-    image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=1024&q=80',
+    image: HSlider1,
   },
   {
     id: 2,
     name: 'Client 2',
     location: 'New York, United States',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1024&q=80',
+    image: HSlider2,
   },
   {
     id: 3,
     name: 'Client 3',
     location: 'London, United Kingdom',
-    image: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=1024&q=80',
+    image: HSlider3,
   },
   {
     id: 4,
     name: 'Client 4',
     location: 'Tokyo, Japan',
-    image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=1024&q=80',
+    image: HSlider4,
   },
   {
     id: 5,
     name: 'Client 5',
     location: 'Sydney, Australia',
-    image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=1024&q=80',
+    image: HSlider2,
   },
   {
     id: 6,
     name: 'Client 6',
     location: 'Paris, France',
-    image: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=1024&q=80',
+    image: HSlider3,
   },
 ];
 
@@ -181,7 +185,7 @@ const HorizontalCardSlider = () => {
       style={getCardStyle(index)}
     >
       <div className="relative h-full">
-        <img src={profile.image} alt={profile.name} className={styles.cardImage} />
+        <img src={profile.image} alt={profile.name} className={styles.cardImage} loading="lazy" />
         {index === currentIndex && (
           <div className={styles.dragIndicator}>Drag</div>
         )}
