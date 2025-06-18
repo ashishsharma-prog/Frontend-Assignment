@@ -77,6 +77,7 @@ const styles = {
 };
 
 const Slide = memo(({ profile, isCurrent, isPrev, isNext }) => {
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
   const slideStyle = useMemo(() => 
     isCurrent || isPrev || isNext ? styles.slide : styles.slideHidden,
     [isCurrent, isPrev, isNext]
@@ -92,6 +93,15 @@ const Slide = memo(({ profile, isCurrent, isPrev, isNext }) => {
     [isCurrent, isPrev]
   );
 
+  useEffect(() => {
+    if (isInitialLoad && isCurrent) {
+      const timer = setTimeout(() => {
+        setIsInitialLoad(false);
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [isCurrent, isInitialLoad]);
+
   return (
     <div 
       className="absolute inset-0 overflow-hidden"
@@ -102,8 +112,10 @@ const Slide = memo(({ profile, isCurrent, isPrev, isNext }) => {
           src={profile.image}
           alt={profile.name}
           className={`absolute top-0 left-0 w-full h-full object-cover transition-all duration-1500 ease-in-out ${zIndex}`}
-          style={imageStyle}
-         
+          style={{
+            ...imageStyle,
+            transform: isInitialLoad && isCurrent ? 'scale(1.1)' : imageStyle.transform
+          }}
         />
       </div>
     </div>
