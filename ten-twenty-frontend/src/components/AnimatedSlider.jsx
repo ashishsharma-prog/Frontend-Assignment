@@ -90,37 +90,47 @@ const Slide = memo(({ profile, isCurrent, isPrev, isNext }) => {
 Slide.displayName = 'Slide';
 
 const NextPreview = memo(({ nextImage, loader, onNext }) => {
-  const strokeDashoffset = useMemo(() => 
-    768 - (768 * loader / 100),
-    [loader]
-  );
+
+  const getSvgProps = () => {
+    if (window.innerWidth >= 1024) return { size: 128, dash: 512, stroke: 6 };
+    if (window.innerWidth >= 640) return { size: 96, dash: 384, stroke: 5 };
+    if (window.innerWidth >= 475) return { size: 80, dash: 320, stroke: 4 };
+    return { size: 64, dash: 256, stroke: 3 };
+  };
+  const { size, dash, stroke } = getSvgProps();
+  const strokeDashoffset = dash - (dash * loader / 100);
 
   return (
     <div
-      className="relative w-32 h-32 rounded-md overflow-visible shadow-lg cursor-pointer group"
+      className="relative w-16 h-16 xs:w-20 xs:h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-md overflow-visible shadow-lg cursor-pointer group"
       onClick={onNext}
-      style={{ boxShadow: '0 4px 16px rgba(0,0,0,0.20)' }}
+      style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.18)' }}
     >
-      <svg width="128" height="128" className="absolute left-0 top-0 z-20 pointer-events-none" style={{overflow: 'visible'}}>
+      <svg
+        width={size}
+        height={size}
+        className="absolute left-0 top-0 z-20 pointer-events-none"
+        style={{overflow: 'visible'}}
+      >
         <rect
-          x="0" y="0" width="128" height="128"
+          x="0" y="0" width={size} height={size}
           fill="none"
           stroke="#fff"
-          strokeWidth="6"
-          strokeDasharray={512}
-          strokeDashoffset={512 - (512 * loader / 100)}
+          strokeWidth={stroke}
+          strokeDasharray={dash}
+          strokeDashoffset={strokeDashoffset}
           style={{transition: 'stroke-dashoffset 0.1s linear'}}
         />
       </svg>
       <div className="absolute left-0 top-0 w-full h-full rounded-md z-10 flex items-center justify-center">
-        <div className="w-28 h-28 flex items-center justify-center">
+        <div className="w-12 h-12 xs:w-16 xs:h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 flex items-center justify-center">
           <img
             src={nextImage}
             alt="Next"
-            className="w-20 h-20 object-cover rounded-md"
+            className="w-10 h-10 xs:w-12 xs:h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 object-cover rounded-md"
           />
           <div className="absolute inset-0 flex items-center justify-center bg-black/30 pointer-events-none">
-            <span className="text-white text-xs font-normal">Next</span>
+            <span className="text-white text-[10px] xs:text-xs font-normal">Next</span>
           </div>
         </div>
       </div>
@@ -142,9 +152,9 @@ const SlideCounter = memo(({ current, total }) => {
   );
 
   return (
-    <div className="flex items-center text-white text-lg font-normal tracking-widest mb-2">
+    <div className="flex items-center text-white text-xs xs:text-sm sm:text-base md:text-lg font-normal tracking-widest mb-1 sm:mb-2">
       <span>{formattedCurrent}</span>
-      <span className="mx-4 w-40 h-px bg-white/40" />
+      <span className="mx-2 xs:mx-3 sm:mx-4 w-12 xs:w-20 sm:w-32 md:w-40 h-px bg-white/40" />
       <span>{formattedTotal}</span>
     </div>
   );
@@ -243,25 +253,26 @@ const AnimatedSlider = () => {
     <div className="w-full overflow-hidden relative group">
       <div
         key={current}
-        className="absolute inset-0 z-50 flex flex-col items-start justify-center pointer-events-none select-none pl-8 md:pl-24 text-left"
+        className="absolute inset-0 z-50 flex flex-col items-start justify-center pointer-events-none select-none pl-2 sm:pl-4 md:pl-8 lg:pl-24 text-left w-full mt-20 sm:mt-32"
       >
-        <span className="text-white text-lg md:text-xl font-light mb-2 md:mb-4 opacity-80 tracking-wide animate-slideUpFade" style={{textShadow: '0 2px 8px rgba(0,0,0,0.4)'}}>Welcome To TenTwenty Farms</span>
-        <h1 className="text-white text-4xl md:text-6xl font-light leading-tight md:leading-tight animate-slideUpFade-delay" style={{textShadow: '0 4px 16px rgba(0,0,0,0.5)'}}>From Our Farms<br/>To Your Hands</h1>
-      </div>
-      {/* Slides */}
-      <div className="relative w-full h-[85vh]">
-        {slides}
+        <span className="text-white text-sm xs:text-base sm:text-lg md:text-xl font-light mb-1 sm:mb-2 md:mb-4 opacity-80 tracking-wide animate-slideUpFade" style={{textShadow: '0 2px 8px rgba(0,0,0,0.4)'}}>Welcome To TenTwenty Farms</span>
+        <h1 className="text-white text-lg xs:text-xl sm:text-3xl md:text-6xl font-light leading-tight md:leading-tight animate-slideUpFade-delay" style={{textShadow: '0 4px 16px rgba(0,0,0,0.5)'}}>From Our Farms<br className='hidden sm:block'/>To Your Hands</h1>
       </div>
 
-      <div className="absolute left-8 md:left-24 bottom-16 flex items-center z-40">
+      <div className="relative w-full h-[50vh] sm:h-[65vh] md:h-[85vh]">
+        {slides}
+      </div>
+      <div className="absolute left-1 xs:left-2 sm:left-8 md:left-24 bottom-2 xs:bottom-4 sm:bottom-8 md:bottom-16 flex flex-row items-end sm:items-center z-40 w-full pr-2 sm:pr-0 gap-2 sm:gap-8">
+
+        <div className="flex-1 flex flex-col items-end justify-end text-right sm:items-start sm:justify-center sm:text-left ml-2 sm:ml-0 sm:mr-8 mt-0 min-w-[7rem] sm:min-w-[10rem] order-2 sm:order-1">
+          <SlideCounter current={current} total={profiles.length} />
+        </div>
         <NextPreview
           nextImage={profiles[nextIndex].image}
           loader={loader}
           onNext={handleNext}
+          className="order-1 sm:order-2"
         />
-        <div className="ml-8 min-w-[10rem] flex flex-col items-start justify-center">
-          <SlideCounter current={current} total={profiles.length} />
-        </div>
       </div>
     </div>
   );
