@@ -21,43 +21,42 @@ const styles = {
   helpText: 'text-center text-gray-300 text-xs md:text-sm',
 };
 
-// Mock data
 const profiles = [
   {
     id: 1,
     name: 'Client 1',
     location: 'Dubai, United Arab Emirates',
-    image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=600&h=800&fit=crop',
+    image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=1024&q=80',
   },
   {
     id: 2,
     name: 'Client 2',
     location: 'New York, United States',
-    image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=600&h=800&fit=crop',
+    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1024&q=80',
   },
   {
     id: 3,
     name: 'Client 3',
     location: 'London, United Kingdom',
-    image: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&h=800&fit=crop',
+    image: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=1024&q=80',
   },
   {
     id: 4,
     name: 'Client 4',
     location: 'Tokyo, Japan',
-    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=800&fit=crop',
+    image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=1024&q=80',
   },
   {
     id: 5,
     name: 'Client 5',
     location: 'Sydney, Australia',
-    image: 'https://images.unsplash.com/photo-1574483345307-2c91043e7a8c?w=600&h=800&fit=crop',
+    image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=1024&q=80',
   },
   {
     id: 6,
     name: 'Client 6',
     location: 'Paris, France',
-    image: 'https://images.unsplash.com/photo-1546026423-cc4642628d2b?w=600&h=800&fit=crop',
+    image: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=1024&q=80',
   },
 ];
 
@@ -128,12 +127,12 @@ const HorizontalCardSlider = () => {
     let rotation = 0;
     let translateY = 0;
     if (relativeIndex < 0) {
-      rotation = -15;
-      translateY = isMobile ? 30 : 130;
+      rotation = isMobile ? -10 : -15;
+      translateY = isMobile ? 40 : 130;
     }
     if (relativeIndex >= 1) {
-      rotation = 15;
-      translateY = isMobile ? 30 : 130;
+      rotation = isMobile ? 10 : -15;
+      translateY = isMobile ? 40 : 130;
     }
 
     return {

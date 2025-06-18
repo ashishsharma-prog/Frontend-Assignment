@@ -10,37 +10,37 @@ const profiles = [
     id: 1,
     name: 'Client 1',
     location: 'Dubai, United Arab Emirates',
-    image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=1024&q=80',
+    image: 'https://images.unsplash.com/photo-1444858291040-58f756a3bdd6?q=80&w=2048&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     id: 2,
     name: 'Client 2',
     location: 'New York, United States',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1024&q=80',
+    image: 'https://images.unsplash.com/photo-1444858291040-58f756a3bdd6?q=80&w=2048&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     id: 3,
     name: 'Client 3',
     location: 'London, United Kingdom',
-    image: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=1024&q=80',
+    image: 'https://images.unsplash.com/photo-1444858291040-58f756a3bdd6?q=80&w=2048&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     id: 4,
     name: 'Client 4',
     location: 'Tokyo, Japan',
-    image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=1024&q=80',
+    image: 'https://images.unsplash.com/9/fields.jpg?q=80&w=1280&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     id: 5,
     name: 'Client 5',
     location: 'Sydney, Australia',
-    image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=1024&q=80',
+    image: 'https://images.unsplash.com/photo-1495107334309-fcf20504a5ab?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     id: 6,
     name: 'Client 6',
     location: 'Paris, France',
-    image: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=1024&q=80',
+    image: 'https://images.unsplash.com/photo-1504017180492-34b17fe42f4c?q=80&w=3003&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
 ];
 
@@ -100,10 +100,6 @@ const Slide = memo(({ profile, isCurrent, isPrev, isNext }) => {
           className={`absolute top-0 left-0 w-full h-full object-cover transition-all duration-1500 ease-in-out ${zIndex}`}
           style={imageStyle}
         />
-        <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black/80 to-transparent">
-          <h3 className="text-4xl font-bold text-white mb-2">{profile.name}</h3>
-          <p className="text-xl text-gray-200">{profile.location}</p>
-        </div>
       </div>
     </div>
   );
