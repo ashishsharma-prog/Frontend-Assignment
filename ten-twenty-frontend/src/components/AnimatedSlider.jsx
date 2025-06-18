@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, useMemo, useCallback, memo } from "react";
+import "../styles/sliderTextAnimation.css";
 
 const DELAY = 7000;
 const LOADER_INTERVAL = 30;
@@ -96,30 +97,30 @@ const NextPreview = memo(({ nextImage, loader, onNext }) => {
 
   return (
     <div
-      className="relative w-48 h-48 rounded-md overflow-visible shadow-lg cursor-pointer group"
+      className="relative w-32 h-32 rounded-md overflow-visible shadow-lg cursor-pointer group"
       onClick={onNext}
-      style={{ boxShadow: '0 4px 24px rgba(0,0,0,0.25)' }}
+      style={{ boxShadow: '0 4px 16px rgba(0,0,0,0.20)' }}
     >
-      <svg width="192" height="192" className="absolute left-0 top-0 z-20 pointer-events-none" style={{overflow: 'visible'}}>
+      <svg width="128" height="128" className="absolute left-0 top-0 z-20 pointer-events-none" style={{overflow: 'visible'}}>
         <rect
-          x="0" y="0" width="192" height="192"
+          x="0" y="0" width="128" height="128"
           fill="none"
           stroke="#fff"
-          strokeWidth="8"
-          strokeDasharray={768}
-          strokeDashoffset={strokeDashoffset}
+          strokeWidth="6"
+          strokeDasharray={512}
+          strokeDashoffset={512 - (512 * loader / 100)}
           style={{transition: 'stroke-dashoffset 0.1s linear'}}
         />
       </svg>
       <div className="absolute left-0 top-0 w-full h-full rounded-md z-10 flex items-center justify-center">
-        <div className="w-44 h-44 flex items-center justify-center">
+        <div className="w-28 h-28 flex items-center justify-center">
           <img
             src={nextImage}
             alt="Next"
-            className="w-32 h-32 object-cover rounded-md"
+            className="w-20 h-20 object-cover rounded-md"
           />
           <div className="absolute inset-0 flex items-center justify-center bg-black/30 pointer-events-none">
-            <span className="text-white text-sm font-normal">Next</span>
+            <span className="text-white text-xs font-normal">Next</span>
           </div>
         </div>
       </div>
@@ -240,11 +241,19 @@ const AnimatedSlider = () => {
 
   return (
     <div className="w-full overflow-hidden relative group">
-      <div className="relative w-full h-[70vh]">
+      <div
+        key={current}
+        className="absolute inset-0 z-50 flex flex-col items-start justify-center pointer-events-none select-none pl-8 md:pl-24 text-left"
+      >
+        <span className="text-white text-lg md:text-xl font-light mb-2 md:mb-4 opacity-80 tracking-wide animate-slideUpFade" style={{textShadow: '0 2px 8px rgba(0,0,0,0.4)'}}>Welcome To TenTwenty Farms</span>
+        <h1 className="text-white text-4xl md:text-6xl font-light leading-tight md:leading-tight animate-slideUpFade-delay" style={{textShadow: '0 4px 16px rgba(0,0,0,0.5)'}}>From Our Farms<br/>To Your Hands</h1>
+      </div>
+      {/* Slides */}
+      <div className="relative w-full h-[85vh]">
         {slides}
       </div>
 
-      <div className="absolute left-16 bottom-16 flex items-center z-40">
+      <div className="absolute left-8 md:left-24 bottom-16 flex items-center z-40">
         <NextPreview
           nextImage={profiles[nextIndex].image}
           loader={loader}
