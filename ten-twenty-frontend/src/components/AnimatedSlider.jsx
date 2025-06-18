@@ -44,14 +44,42 @@ const profiles = [
   },
 ];
 
+const styles = {
+  slide: {
+    clipPath: 'inset(0 0 0 0)',
+    transition: 'clip-path 1500ms cubic-bezier(0.4, 0, 0.2, 1)'
+  },
+  slideHidden: {
+    clipPath: 'inset(50% 0 50% 0)',
+    transition: 'clip-path 1500ms cubic-bezier(0.4, 0, 0.2, 1)'
+  },
+  image: {
+    transform: 'scale(1)',
+    transition: 'transform 2000ms cubic-bezier(0.4, 0, 0.2, 1)'
+  },
+  imageActive: {
+    transform: 'scale(1.1)',
+    transition: 'transform 2000ms cubic-bezier(0.4, 0, 0.2, 1)'
+  },
+  nextPreview: {
+    boxShadow: '0 4px 12px rgba(0,0,0,0.18)'
+  },
+  welcomeText: {
+    textShadow: '0 2px 8px rgba(0,0,0,0.4)'
+  },
+  headingText: {
+    textShadow: '0 4px 16px rgba(0,0,0,0.5)'
+  }
+};
+
 const Slide = memo(({ profile, isCurrent, isPrev, isNext }) => {
-  const clipPath = useMemo(() => 
-    isCurrent || isPrev || isNext ? 'inset(0 0 0 0)' : 'inset(50% 0 50% 0)',
+  const slideStyle = useMemo(() => 
+    isCurrent || isPrev || isNext ? styles.slide : styles.slideHidden,
     [isCurrent, isPrev, isNext]
   );
   
-  const transform = useMemo(() => 
-    isCurrent ? 'scale(1.1)' : 'scale(1)',
+  const imageStyle = useMemo(() => 
+    isCurrent ? styles.imageActive : styles.image,
     [isCurrent]
   );
 
@@ -63,20 +91,14 @@ const Slide = memo(({ profile, isCurrent, isPrev, isNext }) => {
   return (
     <div 
       className="absolute inset-0 overflow-hidden"
-      style={{
-        clipPath,
-        transition: 'clip-path 1500ms cubic-bezier(0.4, 0, 0.2, 1)'
-      }}
+      style={slideStyle}
     >
       <div className="relative w-full h-full">
         <img
           src={profile.image}
           alt={profile.name}
           className={`absolute top-0 left-0 w-full h-full object-cover transition-all duration-1500 ease-in-out ${zIndex}`}
-          style={{
-            transform,
-            transition: 'transform 2000ms cubic-bezier(0.4, 0, 0.2, 1)'
-          }}
+          style={imageStyle}
         />
         <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black/80 to-transparent">
           <h3 className="text-4xl font-bold text-white mb-2">{profile.name}</h3>
@@ -90,21 +112,24 @@ const Slide = memo(({ profile, isCurrent, isPrev, isNext }) => {
 Slide.displayName = 'Slide';
 
 const NextPreview = memo(({ nextImage, loader, onNext }) => {
-
-  const getSvgProps = () => {
+  const svgProps = useMemo(() => {
     if (window.innerWidth >= 1024) return { size: 128, dash: 512, stroke: 6 };
     if (window.innerWidth >= 640) return { size: 96, dash: 384, stroke: 5 };
     if (window.innerWidth >= 475) return { size: 80, dash: 320, stroke: 4 };
     return { size: 64, dash: 256, stroke: 3 };
-  };
-  const { size, dash, stroke } = getSvgProps();
-  const strokeDashoffset = dash - (dash * loader / 100);
+  }, []);
+
+  const { size, dash, stroke } = svgProps;
+  const strokeDashoffset = useMemo(() => 
+    dash - (dash * loader / 100),
+    [dash, loader]
+  );
 
   return (
     <div
       className="relative w-16 h-16 xs:w-20 xs:h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-md overflow-visible shadow-lg cursor-pointer group"
       onClick={onNext}
-      style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.18)' }}
+      style={styles.nextPreview}
     >
       <svg
         width={size}
@@ -255,15 +280,14 @@ const AnimatedSlider = () => {
         key={current}
         className="absolute inset-0 z-50 flex flex-col items-start justify-center pointer-events-none select-none pl-2 sm:pl-4 md:pl-8 lg:pl-24 text-left w-full mt-12 sm:mt-20 md:mt-24"
       >
-        <span className="text-white text-sm xs:text-base sm:text-lg md:text-xl font-light mb-1 sm:mb-2 md:mb-4 opacity-80 tracking-wide animate-slideUpFade" style={{textShadow: '0 2px 8px rgba(0,0,0,0.4)'}}>Welcome To TenTwenty Farms</span>
-        <h1 className="text-white text-lg xs:text-xl sm:text-3xl md:text-6xl font-light leading-tight md:leading-tight animate-slideUpFade-delay" style={{textShadow: '0 4px 16px rgba(0,0,0,0.5)'}}>From Our Farms<br className='hidden sm:block'/>To Your Hands</h1>
+        <span className="text-white text-sm xs:text-base sm:text-lg md:text-xl font-light mb-1 sm:mb-2 md:mb-4 opacity-80 tracking-wide animate-slideUpFade" style={styles.welcomeText}>Welcome To TenTwenty Farms</span>
+        <h1 className="text-white text-lg xs:text-xl sm:text-3xl md:text-6xl font-light leading-tight md:leading-tight animate-slideUpFade-delay" style={styles.headingText}>From Our Farms<br className='hidden sm:block'/>To Your Hands</h1>
       </div>
 
       <div className="relative w-full h-[50vh] sm:h-[65vh] md:h-[85vh]">
         {slides}
       </div>
       <div className="absolute left-1 xs:left-2 sm:left-8 md:left-24 bottom-2 xs:bottom-4 sm:bottom-8 md:bottom-16 flex flex-row items-end sm:items-center z-40 w-full pr-2 sm:pr-0 gap-2 sm:gap-8">
-
         <div className="flex-1 flex flex-col items-end justify-end text-right sm:items-start sm:justify-center sm:text-left ml-2 sm:ml-0 sm:mr-8 mt-0 min-w-[7rem] sm:min-w-[10rem] order-2 sm:order-1">
           <SlideCounter current={current} total={profiles.length} />
         </div>
