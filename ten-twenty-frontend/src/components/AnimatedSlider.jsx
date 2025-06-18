@@ -103,7 +103,7 @@ const Slide = memo(({ profile, isCurrent, isPrev, isNext }) => {
           alt={profile.name}
           className={`absolute top-0 left-0 w-full h-full object-cover transition-all duration-1500 ease-in-out ${zIndex}`}
           style={imageStyle}
-          loading="lazy"
+         
         />
       </div>
     </div>
@@ -154,7 +154,7 @@ const NextPreview = memo(({ nextImage, loader, onNext }) => {
             src={nextImage}
             alt="Next"
             className="w-10 h-10 xs:w-12 xs:h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 object-cover rounded-md"
-            loading="lazy"
+           g
           />
           <div className="absolute inset-0 flex items-center justify-center bg-black/30 pointer-events-none">
             <span className="text-white text-[10px] xs:text-xs font-normal">Next</span>
