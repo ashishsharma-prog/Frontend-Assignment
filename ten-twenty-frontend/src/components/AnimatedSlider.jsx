@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState, useMemo, useCallback, memo } from "react";
 import "../styles/sliderTextAnimation.css";
-import Slider1 from '../assets/slider1.png';
-import Slider2 from '../assets/slider2.png';
-import Slider3 from '../assets/slider3.png';
-import Slider4 from '../assets/slider4.png';
+import Slider1 from '../assets/slider1.webp';
+import Slider2 from '../assets/slider2.webp';
+import Slider3 from '../assets/slider3.webp';
+import Slider4 from '../assets/slider4.webp';
 
 const DELAY = 7000;
 const LOADER_INTERVAL = 30;
